@@ -1,6 +1,5 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PasswordCheckerTest {
     PasswordChecker checker = new PasswordChecker();
@@ -11,7 +10,7 @@ public class PasswordCheckerTest {
         checker.setMinLength("0");
         int expected = 0;
         int actual = checker.getMinLength();
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -20,23 +19,19 @@ public class PasswordCheckerTest {
         checker.setMinLength("7");
         int expected = 7;
         int actual = checker.getMinLength();
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("N: Минимальная длина пароля меньше 0")
     public void minLengthExceptionBelowZero() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            checker.setMinLength("-3");
-        });
+        assertThrows(IllegalArgumentException.class, () -> checker.setMinLength("-3"));
     }
 
     @Test
     @DisplayName("N: Минимальная длина пароля принимает пустое значение")
     public void minLengthExceptionIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            checker.setMinLength("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> checker.setMinLength(""));
     }
 
     @Test
@@ -45,31 +40,25 @@ public class PasswordCheckerTest {
         checker.setMaxRepeats("5");
         int expected = 5;
         int actual = checker.getMaxRepeats();
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("N: Максимальное количество повторов равно 0")
     public void maxRepeatsExceptionIsZero() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            checker.setMaxRepeats("0");
-        });
+        assertThrows(IllegalArgumentException.class, () -> checker.setMaxRepeats("0"));
     }
 
     @Test
     @DisplayName("N: Максимальное количество повторов меньше 0")
     public void maxRepeatsExceptionBelowZero() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            checker.setMaxRepeats("-1");
-        });
+        assertThrows(IllegalArgumentException.class, () -> checker.setMaxRepeats("-1"));
     }
 
     @Test
     @DisplayName("N: Максимальное количество повторов принимает пустое значение")
     public void maxRepeatsExceptionIsEmpty() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            checker.setMaxRepeats("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> checker.setMaxRepeats(""));
     }
 
     @Test
@@ -78,7 +67,7 @@ public class PasswordCheckerTest {
         checker.setMinLength("4");
         checker.setMaxRepeats("2");
         boolean actual = checker.verify("pass");
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @Test
@@ -87,7 +76,7 @@ public class PasswordCheckerTest {
         checker.setMinLength("5");
         checker.setMaxRepeats("2");
         boolean actual = checker.verify("password");
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @Test
@@ -96,16 +85,14 @@ public class PasswordCheckerTest {
         checker.setMinLength("5");
         checker.setMaxRepeats("2");
         boolean actual = checker.verify("pass");
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 
     @Test
     @DisplayName("N: Не задана минимальная длина пароля")
     public void passLengthIsNotSet() {
         checker.setMaxRepeats("2");
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            checker.verify("password");
-        });
+        assertThrows(IllegalStateException.class, () -> checker.verify("password"));
     }
 
     @Test
@@ -114,7 +101,7 @@ public class PasswordCheckerTest {
         checker.setMinLength("5");
         checker.setMaxRepeats("2");
         boolean actual = checker.verify("password");
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @Test
@@ -123,7 +110,7 @@ public class PasswordCheckerTest {
         checker.setMinLength("5");
         checker.setMaxRepeats("3");
         boolean actual = checker.verify("password");
-        Assertions.assertTrue(actual);
+        assertTrue(actual);
     }
 
     @Test
@@ -132,15 +119,13 @@ public class PasswordCheckerTest {
         checker.setMinLength("5");
         checker.setMaxRepeats("2");
         boolean actual = checker.verify("password111");
-        Assertions.assertFalse(actual);
+        assertFalse(actual);
     }
 
     @Test
     @DisplayName("N: Не задано максимальное количество повторов")
     public void maxRepeatIsNotSet() {
         checker.setMinLength("5");
-        Assertions.assertThrows(IllegalStateException.class, () -> {
-            checker.verify("password");
-        });
+        assertThrows(IllegalStateException.class, () -> checker.verify("password"));
     }
 }
